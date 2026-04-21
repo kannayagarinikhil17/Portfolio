@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K Nikhil Sagar — Data Analyst & ML Researcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060608;
+  --bg2: #0c0c10;
+  --surface: #111116;
+  --surface2: #18181f;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --teal: #00e5c8;
+  --violet: #a855f7;
+  --amber: #fbbf24;
+  --rose: #f43f5e;
+  --blue: #3b82f6;
+  --text: #f0f0f8;
+  --muted: #5a5a72;
+  --muted2: #8888a0;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
+::selection{background:rgba(0,229,200,0.2);color:var(--teal)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(0,229,200,0.4);border-radius:4px}
+
+/* ═══════════ CURSOR ═══════════ */
+.cursor{width:12px;height:12px;border-radius:50%;background:var(--teal);position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,opacity 0.3s;mix-blend-mode:difference}
+.cursor-ring{width:40px;height:40px;border-radius:50%;border:1px solid rgba(0,229,200,0.4);position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform 0.15s ease-out,width 0.3s,height 0.3s,border-color 0.3s}
+
+/* ═══════════ NOISE ═══════════ */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.5}
+
+/* ═══════════ NAV ═══════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 60px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,8,0.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--teal);text-decoration:none}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted2);font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--teal);transition:width 0.3s}
+.nav-links a:hover{color:var(--teal)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:8px 22px;border:1px solid var(--teal);color:var(--teal);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;border-radius:3px;transition:all 0.25s}
+.nav-cta:hover{background:var(--teal);color:var(--bg)}
+
+/* ═══════════ HERO ═══════════ */
+#hero{min-height:100vh;display:flex;align-items:center;padding:80px 60px 60px;position:relative;overflow:hidden}
+
+/* animated bg lines */
+.bg-lines{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.bg-line{position:absolute;width:1px;background:linear-gradient(to bottom,transparent,rgba(0,229,200,0.08),transparent);animation:lineFall linear infinite}
+.bg-line:nth-child(1){left:15%;height:60%;top:-20%;animation-duration:8s;animation-delay:0s}
+.bg-line:nth-child(2){left:30%;height:40%;top:-10%;animation-duration:10s;animation-delay:2s}
+.bg-line:nth-child(3){left:55%;height:70%;top:-30%;animation-duration:12s;animation-delay:1s}
+.bg-line:nth-child(4){left:70%;height:50%;top:-15%;animation-duration:9s;animation-delay:3s}
+.bg-line:nth-child(5){left:85%;height:55%;top:-25%;animation-duration:11s;animation-delay:0.5s}
+@keyframes lineFall{0%{transform:translateY(-100%);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(200vh);opacity:0}}
+
+.hero-glow{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
+.glow-teal{width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,200,0.08),transparent 70%);top:-200px;right:-100px;animation:glowPulse 6s ease-in-out infinite alternate}
+.glow-violet{width:400px;height:400px;background:radial-gradient(circle,rgba(168,85,247,0.07),transparent 70%);bottom:0;left:-100px;animation:glowPulse 8s ease-in-out infinite alternate-reverse}
+@keyframes glowPulse{0%{opacity:0.6;transform:scale(1)}100%{opacity:1;transform:scale(1.1)}}
+
+.hero-left{flex:1;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid rgba(0,229,200,0.3);border-radius:100px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:36px;opacity:0;animation:riseIn 0.6s 0.4s ease forwards}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulseDot 2s infinite}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(0,229,200,0.5)}50%{box-shadow:0 0 0 6px rgba(0,229,200,0)}}
+
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,10vw,130px);line-height:0.92;letter-spacing:1px;margin-bottom:6px;opacity:0;animation:riseIn 0.8s 0.6s ease forwards}
+.hero-title .outline{-webkit-text-stroke:1px rgba(255,255,255,0.2);color:transparent}
+.hero-title .glow-text{color:var(--teal);text-shadow:0 0 60px rgba(0,229,200,0.4)}
+
+.hero-role{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(18px,2.5vw,26px);color:var(--muted2);margin:28px 0 36px;opacity:0;animation:riseIn 0.8s 0.8s ease forwards}
+.hero-role span{color:var(--amber);font-style:normal;font-family:'Space Grotesk',sans-serif;font-weight:600}
+
+.hero-desc{font-size:15px;line-height:1.8;color:var(--muted2);max-width:520px;margin-bottom:48px;opacity:0;animation:riseIn 0.8s 1s ease forwards}
+.hero-desc strong{color:var(--text);font-weight:500}
+
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:riseIn 0.8s 1.2s ease forwards}
+.btn-glow{padding:14px 32px;background:var(--teal);color:var(--bg);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;border-radius:4px;position:relative;overflow:hidden;transition:all 0.3s}
+.btn-glow::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transform:translateX(-100%);transition:transform 0.6s}
+.btn-glow:hover::before{transform:translateX(100%)}
+.btn-glow:hover{box-shadow:0 0 40px rgba(0,229,200,0.4);transform:translateY(-2px)}
+.btn-ghost{padding:14px 32px;border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;border-radius:4px;transition:all 0.3s}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px)}
+
+/* hero right — profile canvas */
+.hero-right{width:420px;flex-shrink:0;position:relative;z-index:2;opacity:0;animation:riseIn 1s 0.8s ease forwards}
+.profile-frame{position:relative;width:340px;margin:0 auto}
+.profile-ring{position:absolute;inset:-20px;border-radius:50%;border:1px solid rgba(0,229,200,0.15);animation:spinRing 20s linear infinite}
+.profile-ring-2{position:absolute;inset:-40px;border-radius:50%;border:1px solid rgba(168,85,247,0.1);animation:spinRing 30s linear infinite reverse}
+.profile-img-wrap{width:300px;height:300px;border-radius:50%;overflow:hidden;margin:0 auto;position:relative;border:2px solid rgba(0,229,200,0.3);box-shadow:0 0 60px rgba(0,229,200,0.15),inset 0 0 40px rgba(0,0,0,0.5)}
+.profile-avatar{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f1f2e,#1a0f2e,#0f2020);font-family:'Bebas Neue',sans-serif;font-size:80px;color:var(--teal);text-shadow:0 0 40px rgba(0,229,200,0.5)}
+.profile-float-card{position:absolute;background:rgba(17,17,22,0.9);border:1px solid var(--border2);backdrop-filter:blur(16px);border-radius:8px;padding:12px 16px;white-space:nowrap}
+.pfc-tl{top:20px;left:-20px;animation:floatCard 4s ease-in-out infinite}
+.pfc-br{bottom:30px;right:-30px;animation:floatCard 4s ease-in-out 2s infinite}
+.pfc-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:4px}
+.pfc-val{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--teal)}
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes spinRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.hero-scroll-hint{position:absolute;bottom:40px;left:60px;display:flex;align-items:center;gap:12px;opacity:0;animation:riseIn 0.8s 1.6s ease forwards}
+.scroll-bar{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--teal),transparent);animation:scrollAnim 2s ease-in-out infinite}
+@keyframes scrollAnim{0%,100%{transform:scaleY(1);opacity:0.6}50%{transform:scaleY(1.2);opacity:1}}
+.scroll-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+
+@keyframes riseIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════ SECTION COMMON ═══════════ */
+section{padding:110px 60px}
+.s-tag{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+.s-tag::before{content:'//';opacity:0.5;font-family:'JetBrains Mono',monospace}
+.s-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,72px);letter-spacing:1px;line-height:0.95;margin-bottom:64px}
+.s-title .dim{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.15)}
+
+/* ═══════════ ABOUT ═══════════ */
+#about{background:var(--bg2);position:relative;overflow:hidden}
+#about::before{content:'';position:absolute;right:-200px;top:-200px;width:500px;height:500px;background:radial-gradient(circle,rgba(168,85,247,0.05),transparent 70%);pointer-events:none}
+
+.about-wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:80px;align-items:start}
+.about-body p{font-size:15px;line-height:1.9;color:var(--muted2);margin-bottom:18px}
+.about-body strong{color:var(--teal);font-weight:500}
+.about-contacts{margin-top:40px;display:flex;flex-direction:column;gap:12px}
+.ac-row{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted2)}
+.ac-icon{width:34px;height:34px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ac-row a{color:var(--teal);text-decoration:none}
+.ac-row a:hover{text-decoration:underline}
+
+.skills-wrap{display:flex;flex-direction:column;gap:28px}
+.sk-group-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-family:'JetBrains Mono',monospace}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:5px 13px;font-size:12px;border-radius:3px;transition:all 0.25s;cursor:default;border:1px solid}
+.chip-teal{background:rgba(0,229,200,0.06);border-color:rgba(0,229,200,0.2);color:var(--teal)}
+.chip-violet{background:rgba(168,85,247,0.06);border-color:rgba(168,85,247,0.2);color:#c084fc}
+.chip-amber{background:rgba(251,191,36,0.06);border-color:rgba(251,191,36,0.2);color:var(--amber)}
+.chip-blue{background:rgba(59,130,246,0.06);border-color:rgba(59,130,246,0.2);color:#60a5fa}
+.chip-default{background:var(--surface2);border-color:var(--border2);color:var(--muted2)}
+.chip:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 4px 16px rgba(0,0,0,0.3)}
+
+/* ═══════════ PROJECTS ═══════════ */
+#projects{background:var(--bg)}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:24px}
+
+.proj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.4s;position:relative;cursor:default}
+.proj-card:hover{border-color:rgba(0,229,200,0.25);transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(0,229,200,0.1)}
+
+/* project image / illustration */
+.proj-visual{height:200px;position:relative;overflow:hidden}
+.proj-visual svg{width:100%;height:100%}
+
+/* FedEx project illustration */
+.vis-fedex{background:linear-gradient(135deg,#060e18,#0a1628)}
+/* Amazon DB illustration */
+.vis-amazon{background:linear-gradient(135deg,#10060e,#1a0818)}
+/* Security illustration */
+.vis-security{background:linear-gradient(135deg,#060e10,#071818)}
+
+.proj-body{padding:28px}
+.proj-year{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+.proj-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.5px;margin-bottom:10px;line-height:1.1}
+.proj-desc{font-size:13px;line-height:1.7;color:var(--muted2);margin-bottom:18px}
+.proj-metric{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);background:rgba(0,229,200,0.07);border-left:2px solid var(--teal);padding:8px 12px;border-radius:0 4px 4px 0;margin-bottom:20px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px}
+.ptag{font-size:10px;padding:3px 9px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);color:#60a5fa;border-radius:3px;letter-spacing:0.05em}
+
+/* ═══════════ RESEARCH ═══════════ */
+#research{background:var(--bg2)}
+.pub-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:40px;display:grid;grid-template-columns:80px 1fr;gap:36px;max-width:840px;transition:all 0.3s;position:relative;overflow:hidden}
+.pub-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--teal),var(--amber))}
+.pub-wrap:hover{border-color:rgba(0,229,200,0.2);box-shadow:0 16px 40px rgba(0,0,0,0.4)}
+.pub-visual{width:80px;height:80px;border-radius:10px;background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(0,229,200,0.1));border:1px solid rgba(168,85,247,0.25);display:flex;align-items:center;justify-content:center;font-size:36px}
+.pub-journal{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--violet);margin-bottom:10px}
+.pub-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.5px;line-height:1.2;margin-bottom:12px}
+.pub-desc{font-size:13px;line-height:1.7;color:var(--muted2);margin-bottom:16px}
+.pub-kpi{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber)}
+
+/* ═══════════ EDUCATION ═══════════ */
+#education{background:var(--bg)}
+.edu-timeline{position:relative;padding-left:36px;max-width:760px}
+.edu-timeline::before{content:'';position:absolute;left:0;top:20px;bottom:20px;width:1px;background:linear-gradient(to bottom,var(--teal),rgba(0,229,200,0.1))}
+.edu-item{position:relative;padding-bottom:48px;opacity:0;transform:translateX(-20px);transition:all 0.6s}
+.edu-item.visible{opacity:1;transform:translateX(0)}
+.edu-dot{position:absolute;left:-42px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--teal);transition:all 0.3s;box-shadow:0 0 0 4px rgba(0,229,200,0.1)}
+.edu-item:hover .edu-dot{background:var(--teal);box-shadow:0 0 0 6px rgba(0,229,200,0.15),0 0 20px rgba(0,229,200,0.4)}
+.edu-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:28px;transition:all 0.3s}
+.edu-item:hover .edu-card{border-color:rgba(0,229,200,0.2)}
+.edu-period{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.edu-degree{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.5px;margin-bottom:4px}
+.edu-inst{font-size:13px;color:var(--teal);margin-bottom:10px}
+.edu-detail{font-size:13px;color:var(--muted2);line-height:1.7}
+.edu-badge{display:inline-block;margin-top:12px;padding:4px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px}
+.badge-gpa{background:rgba(0,229,200,0.1);border:1px solid rgba(0,229,200,0.3);color:var(--teal)}
+.badge-pct{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:var(--amber)}
+
+/* ═══════════ ACHIEVEMENTS ═══════════ */
+#achievements{background:var(--bg2)}
+.ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.ach-subtitle{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted2);margin-bottom:24px;font-family:'JetBrains Mono',monospace}
+.ach-list{display:flex;flex-direction:column;gap:14px}
+.ach-card{display:flex;gap:14px;padding:18px 20px;background:var(--surface);border:1px solid var(--border);border-radius:7px;transition:all 0.3s;position:relative;overflow:hidden}
+.ach-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--teal);transform:scaleY(0);transform-origin:bottom;transition:transform 0.3s}
+.ach-card:hover{border-color:rgba(0,229,200,0.2);transform:translateX(4px)}
+.ach-card:hover::before{transform:scaleY(1)}
+.ach-card.award::before{background:var(--amber)}
+.ach-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.ach-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;margin-bottom:3px}
+.ach-sub{font-size:12px;color:var(--muted2)}
+
+/* ═══════════ CONTACT ═══════════ */
+#contact{background:var(--bg);text-align:center}
+.contact-wrap{max-width:680px;margin:0 auto}
+.contact-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,96px);letter-spacing:2px;line-height:0.9;margin-bottom:24px}
+.contact-big .glow-line{color:var(--teal);text-shadow:0 0 80px rgba(0,229,200,0.4)}
+.contact-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--muted2);margin-bottom:52px;line-height:1.7}
+.contact-links{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.cl-item{display:flex;align-items:center;gap:10px;padding:13px 22px;background:var(--surface);border:1px solid var(--border2);border-radius:6px;text-decoration:none;color:var(--text);font-size:13px;font-weight:500;transition:all 0.3s;position:relative;overflow:hidden}
+.cl-item::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,229,200,0.08),transparent);opacity:0;transition:opacity 0.3s}
+.cl-item:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.4)}
+.cl-item:hover::after{opacity:1}
+.cl-ico{font-size:18px}
+
+/* ═══════════ FOOTER ═══════════ */
+footer{padding:28px 60px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--teal)}
+footer p{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+/* ═══════════ REVEAL ═══════════ */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:0.1s}.reveal-d2{transition-delay:0.2s}.reveal-d3{transition-delay:0.3s}.reveal-d4{transition-delay:0.4s}
+
+/* ═══════════ RESP ═══════════ */
+@media(max-width:900px){
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  section{padding:80px 24px}
+  #hero{padding:80px 24px 60px;flex-direction:column;gap:60px}
+  .hero-right{width:100%}
+  .about-wrap{grid-template-columns:1fr;gap:40px}
+  .ach-grid{grid-template-columns:1fr}
+  footer{padding:20px 24px;flex-direction:column;gap:8px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">KNS</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#achievements">Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:kannayagarinikhil@gmail.com" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="bg-lines">
+    <div class="bg-line"></div><div class="bg-line"></div><div class="bg-line"></div><div class="bg-line"></div><div class="bg-line"></div>
+  </div>
+  <div class="hero-glow glow-teal"></div>
+  <div class="hero-glow glow-violet"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge"><span class="badge-dot"></span> Open to opportunities · Hyderabad, India</div>
+    <h1 class="hero-title">
+      K NIKHIL<br>
+      <span class="outline">SAGAR</span>
+    </h1>
+    <p class="hero-role">Data Analyst & <span>ML Researcher</span></p>
+    <p class="hero-desc">
+      Computer Science graduate (GPA <strong>8.33/10</strong>) who builds <strong>end-to-end data pipelines, predictive models</strong> and interactive dashboards that turn messy data into decisions that matter. Published ML researcher. Award-winning hackathon builder.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-glow">View Projects →</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="profile-frame">
+      <div class="profile-ring"></div>
+      <div class="profile-ring-2"></div>
+      <div class="profile-img-wrap">
+        <div class="profile-avatar">KNS</div>
+      </div>
+      <!-- floating cards -->
+      <div class="profile-float-card pfc-tl">
+        <div class="pfc-label">GPA Score</div>
+        <div class="pfc-val">8.33 / 10</div>
+      </div>
+      <div class="profile-float-card pfc-br">
+        <div class="pfc-label">Published · IJSREM</div>
+        <div class="pfc-val">ML Research</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <div class="scroll-bar"></div>
+    <span class="scroll-label">Scroll</span>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="s-tag">About Me</div>
+  <h2 class="s-title">THE ANALYST<br><span class="dim">BEHIND THE DATA</span></h2>
+
+  <div class="about-wrap">
+    <div class="about-body reveal">
+      <p>I'm a <strong>Computer Science & Engineering graduate</strong> from Guru Nanak Institutions Technical Campus, Hyderabad. My craft sits at the intersection of code, statistics, and storytelling.</p>
+      <p>I build <strong>automated ETL pipelines</strong>, normalized database schemas, and Streamlit + Power BI dashboards that give stakeholders clarity at a glance. I've shipped projects reducing manual reporting by 40%, identified 23% fulfillment bottlenecks, and published a hybrid ML model that improved fuel forecasting by 12%.</p>
+      <p>I'm actively seeking roles in <strong>Data Analytics, Business Intelligence,</strong> or <strong>Data Engineering</strong> where I can contribute to impactful, numbers-driven decisions.</p>
+      <div class="about-contacts">
+        <div class="ac-row"><div class="ac-icon">📍</div> Greater Hyderabad Area, India</div>
+        <div class="ac-row"><div class="ac-icon">🎓</div> B.Tech CSE — Graduating Aug 2025</div>
+        <div class="ac-row"><div class="ac-icon">✉️</div> <a href="mailto:kannayagarinikhil@gmail.com">kannayagarinikhil@gmail.com</a></div>
+        <div class="ac-row"><div class="ac-icon">📞</div> +91-9398601015</div>
+        <div class="ac-row"><div class="ac-icon">🔗</div> <a href="https://linkedin.com/in/kannayagarinikhil-sagar" target="_blank">linkedin.com/in/kannayagarinikhil-sagar</a></div>
+        <div class="ac-row"><div class="ac-icon">🐙</div> <a href="https://github.com/kannayagarinikhil17" target="_blank">github.com/kannayagarinikhil17</a></div>
+      </div>
+    </div>
+
+    <div class="skills-wrap reveal reveal-d2">
+      <div>
+        <div class="sk-group-label">Core Languages</div>
+        <div class="chips">
+          <span class="chip chip-teal">Python</span>
+          <span class="chip chip-teal">SQL</span>
+          <span class="chip chip-default">Java</span>
+          <span class="chip chip-default">C</span>
+        </div>
+      </div>
+      <div>
+        <div class="sk-group-label">Data & Analytics</div>
+        <div class="chips">
+          <span class="chip chip-violet">Pandas</span>
+          <span class="chip chip-violet">NumPy</span>
+          <span class="chip chip-violet">Scikit-Learn</span>
+          <span class="chip chip-violet">Plotly</span>
+          <span class="chip chip-teal">Power BI</span>
+          <span class="chip chip-teal">Tableau</span>
+          <span class="chip chip-default">Streamlit</span>
+          <span class="chip chip-default">Excel</span>
+        </div>
+      </div>
+      <div>
+        <div class="sk-group-label">Databases & Engineering</div>
+        <div class="chips">
+          <span class="chip chip-amber">PostgreSQL</span>
+          <span class="chip chip-amber">MySQL</span>
+          <span class="chip chip-amber">SQL Server</span>
+          <span class="chip chip-default">ETL Pipelines</span>
+          <span class="chip chip-default">Data Modeling</span>
+          <span class="chip chip-default">RDLC</span>
+        </div>
+      </div>
+      <div>
+        <div class="sk-group-label">ML / AI</div>
+        <div class="chips">
+          <span class="chip chip-blue">SVM</span>
+          <span class="chip chip-blue">Random Forest</span>
+          <span class="chip chip-blue">Neural Networks</span>
+          <span class="chip chip-blue">Deep Learning</span>
+          <span class="chip chip-default">Logistic Regression</span>
+        </div>
+      </div>
+      <div>
+        <div class="sk-group-label">Tools & Platforms</div>
+        <div class="chips">
+          <span class="chip chip-default">Git / GitHub</span>
+          <span class="chip chip-default">Flask</span>
+          <span class="chip chip-default">OpenCV</span>
+          <span class="chip chip-default">Alibaba Cloud</span>
+          <span class="chip chip-default">SSIS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects">
+  <div class="s-tag">Featured Work</div>
+  <h2 class="s-title">PROJECTS<br><span class="dim">THAT DRIVE RESULTS</span></h2>
+
+  <div class="projects-grid">
+
+    <!-- Project 1: FedEx -->
+    <div class="proj-card reveal">
+      <div class="proj-visual vis-fedex">
+        <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Grid background -->
+          <defs>
+            <pattern id="grid1" width="30" height="30" patternUnits="userSpaceOnUse">
+              <path d="M30 0L0 0 0 30" fill="none" stroke="rgba(0,229,200,0.07)" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="200" fill="url(#grid1)"/>
+          <!-- Data flow nodes -->
+          <circle cx="40" cy="100" r="18" fill="rgba(0,229,200,0.12)" stroke="rgba(0,229,200,0.5)" stroke-width="1.5"/>
+          <text x="40" y="105" text-anchor="middle" font-size="10" fill="#00e5c8" font-family="JetBrains Mono,monospace">DB</text>
+          <circle cx="120" cy="60" r="18" fill="rgba(59,130,246,0.12)" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <text x="120" y="65" text-anchor="middle" font-size="9" fill="#60a5fa" font-family="JetBrains Mono,monospace">ETL</text>
+          <circle cx="120" cy="140" r="18" fill="rgba(59,130,246,0.12)" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <text x="120" y="145" text-anchor="middle" font-size="9" fill="#60a5fa" font-family="JetBrains Mono,monospace">PY</text>
+          <rect x="200" y="74" width="60" height="52" rx="6" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.4)" stroke-width="1.5"/>
+          <text x="230" y="96" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">STREAM</text>
+          <text x="230" y="110" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">LIT</text>
+          <circle cx="330" cy="100" r="24" fill="rgba(0,229,200,0.08)" stroke="rgba(0,229,200,0.6)" stroke-width="2"/>
+          <text x="330" y="95" text-anchor="middle" font-size="9" fill="#00e5c8" font-weight="bold" font-family="JetBrains Mono,monospace">-40%</text>
+          <text x="330" y="108" text-anchor="middle" font-size="8" fill="rgba(0,229,200,0.7)" font-family="JetBrains Mono,monospace">reporting</text>
+          <!-- Connecting lines -->
+          <line x1="58" y1="88" x2="102" y2="68" stroke="rgba(0,229,200,0.3)" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="58" y1="112" x2="102" y2="132" stroke="rgba(0,229,200,0.3)" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="138" y1="68" x2="200" y2="92" stroke="rgba(59,130,246,0.3)" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="138" y1="134" x2="200" y2="112" stroke="rgba(59,130,246,0.3)" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="260" y1="100" x2="306" y2="100" stroke="rgba(168,85,247,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <!-- data points -->
+          <circle cx="70" cy="170" r="2" fill="rgba(0,229,200,0.6)"/>
+          <circle cx="90" cy="165" r="2" fill="rgba(0,229,200,0.6)"/>
+          <circle cx="110" cy="172" r="2" fill="rgba(0,229,200,0.6)"/>
+          <circle cx="130" cy="160" r="2" fill="rgba(0,229,200,0.6)"/>
+          <circle cx="150" cy="168" r="2" fill="rgba(0,229,200,0.6)"/>
+          <polyline points="70,170 90,165 110,172 130,160 150,168 170,162 190,155" fill="none" stroke="rgba(0,229,200,0.4)" stroke-width="1"/>
+          <!-- label -->
+          <text x="20" y="22" font-size="11" fill="rgba(0,229,200,0.8)" font-family="JetBrains Mono,monospace">10,000+ SHIPMENT RECORDS</text>
+        </svg>
+      </div>
+      <div class="proj-body">
+        <div class="proj-year">2025 · Supply Chain Analytics</div>
+        <div class="proj-title">FedEx Supply Chain Delay & Pricing Analysis</div>
+        <div class="proj-desc">Architected an end-to-end SQL/Python pipeline for 10,000+ shipment records with automated ETL workflows and Streamlit dashboards delivering actionable freight insights to 3+ stakeholder teams.</div>
+        <div class="proj-metric">↓ 40% reduction in manual reporting time</div>
+        <div class="proj-tags">
+          <span class="ptag">Python</span><span class="ptag">Pandas</span><span class="ptag">Plotly</span><span class="ptag">Streamlit</span><span class="ptag">SQL Server</span><span class="ptag">ETL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2: Amazon DB -->
+    <div class="proj-card reveal reveal-d2">
+      <div class="proj-visual vis-amazon">
+        <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid2" width="25" height="25" patternUnits="userSpaceOnUse">
+              <path d="M25 0L0 0 0 25" fill="none" stroke="rgba(168,85,247,0.06)" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="200" fill="url(#grid2)"/>
+          <!-- 8 domain boxes arranged in schema style -->
+          <rect x="20" y="20" width="68" height="34" rx="4" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.4)" stroke-width="1"/>
+          <text x="54" y="41" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">USERS</text>
+          <rect x="110" y="20" width="68" height="34" rx="4" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.4)" stroke-width="1"/>
+          <text x="144" y="41" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">ORDERS</text>
+          <rect x="200" y="20" width="68" height="34" rx="4" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.4)" stroke-width="1"/>
+          <text x="234" y="41" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">PRODUCTS</text>
+          <rect x="290" y="20" width="90" height="34" rx="4" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.4)" stroke-width="1"/>
+          <text x="335" y="41" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">INVENTORY</text>
+          <!-- center fact table -->
+          <rect x="140" y="80" width="110" height="50" rx="6" fill="rgba(251,191,36,0.1)" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
+          <text x="195" y="102" text-anchor="middle" font-size="10" fill="#fbbf24" font-weight="bold" font-family="JetBrains Mono,monospace">ORDER_ITEMS</text>
+          <text x="195" y="118" text-anchor="middle" font-size="8" fill="rgba(251,191,36,0.7)" font-family="JetBrains Mono,monospace">FACT TABLE</text>
+          <!-- lower dimension tables -->
+          <rect x="20" y="148" width="78" height="32" rx="4" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.4)" stroke-width="1"/>
+          <text x="59" y="168" text-anchor="middle" font-size="9" fill="#60a5fa" font-family="JetBrains Mono,monospace">PAYMENTS</text>
+          <rect x="120" y="148" width="80" height="32" rx="4" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.4)" stroke-width="1"/>
+          <text x="160" y="168" text-anchor="middle" font-size="9" fill="#60a5fa" font-family="JetBrains Mono,monospace">SHIPPING</text>
+          <rect x="222" y="148" width="80" height="32" rx="4" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.4)" stroke-width="1"/>
+          <text x="262" y="168" text-anchor="middle" font-size="9" fill="#60a5fa" font-family="JetBrains Mono,monospace">REVIEWS</text>
+          <rect x="320" y="148" width="60" height="32" rx="4" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.4)" stroke-width="1"/>
+          <text x="350" y="168" text-anchor="middle" font-size="9" fill="#60a5fa" font-family="JetBrains Mono,monospace">SELLERS</text>
+          <!-- connecting lines -->
+          <line x1="54" y1="54" x2="165" y2="80" stroke="rgba(168,85,247,0.25)" stroke-width="0.8"/>
+          <line x1="144" y1="54" x2="185" y2="80" stroke="rgba(168,85,247,0.25)" stroke-width="0.8"/>
+          <line x1="234" y1="54" x2="215" y2="80" stroke="rgba(168,85,247,0.25)" stroke-width="0.8"/>
+          <line x1="335" y1="54" x2="240" y2="82" stroke="rgba(168,85,247,0.25)" stroke-width="0.8"/>
+          <line x1="165" y1="130" x2="100" y2="148" stroke="rgba(251,191,36,0.25)" stroke-width="0.8"/>
+          <line x1="185" y1="130" x2="162" y2="148" stroke="rgba(251,191,36,0.25)" stroke-width="0.8"/>
+          <line x1="210" y1="130" x2="245" y2="148" stroke="rgba(251,191,36,0.25)" stroke-width="0.8"/>
+          <line x1="230" y1="130" x2="330" y2="148" stroke="rgba(251,191,36,0.25)" stroke-width="0.8"/>
+          <text x="20" y="12" font-size="11" fill="rgba(168,85,247,0.8)" font-family="JetBrains Mono,monospace">8-DOMAIN RELATIONAL SCHEMA</text>
+        </svg>
+      </div>
+      <div class="proj-body">
+        <div class="proj-year">2024 · Database Design & Analytics</div>
+        <div class="proj-title">Amazon E-Commerce Database Design & Analytics</div>
+        <div class="proj-desc">Built a fully normalized 8-domain relational schema with 50+ complex SQL queries identifying fulfillment bottlenecks. Power BI dashboards cut reporting overhead significantly.</div>
+        <div class="proj-metric">↓ 23% fulfillment bottleneck identified · ↓ 35% reporting effort</div>
+        <div class="proj-tags">
+          <span class="ptag">Python</span><span class="ptag">SQL Server</span><span class="ptag">PostgreSQL</span><span class="ptag">Power BI</span><span class="ptag">RDLC</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 3: Security -->
+    <div class="proj-card reveal reveal-d3">
+      <div class="proj-visual vis-security">
+        <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="hex" width="30" height="26" patternUnits="userSpaceOnUse">
+              <polygon points="15,1 29,8.5 29,17.5 15,25 1,17.5 1,8.5" fill="none" stroke="rgba(0,229,200,0.05)" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="200" fill="url(#hex)"/>
+          <!-- Video source -->
+          <rect x="20" y="70" width="60" height="60" rx="6" fill="rgba(59,130,246,0.12)" stroke="rgba(59,130,246,0.4)" stroke-width="1.5"/>
+          <text x="50" y="96" text-anchor="middle" font-size="9" fill="#60a5fa" font-family="JetBrains Mono,monospace">VIDEO</text>
+          <text x="50" y="108" text-anchor="middle" font-size="9" fill="#60a5fa" font-family="JetBrains Mono,monospace">500MB</text>
+          <!-- AES encryption layer -->
+          <rect x="120" y="55" width="80" height="90" rx="8" fill="rgba(0,229,200,0.08)" stroke="rgba(0,229,200,0.5)" stroke-width="1.5"/>
+          <text x="160" y="90" text-anchor="middle" font-size="10" fill="#00e5c8" font-weight="bold" font-family="JetBrains Mono,monospace">AES</text>
+          <text x="160" y="104" text-anchor="middle" font-size="8" fill="rgba(0,229,200,0.7)" font-family="JetBrains Mono,monospace">FRAME</text>
+          <text x="160" y="116" text-anchor="middle" font-size="8" fill="rgba(0,229,200,0.7)" font-family="JetBrains Mono,monospace">ENCRYPT</text>
+          <!-- 5 party key shares -->
+          <circle cx="272" cy="48" r="16" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.4)" stroke-width="1.2"/>
+          <text x="272" y="52" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">K1</text>
+          <circle cx="312" cy="72" r="16" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.4)" stroke-width="1.2"/>
+          <text x="312" y="76" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">K2</text>
+          <circle cx="328" cy="110" r="16" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.4)" stroke-width="1.2"/>
+          <text x="328" y="114" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">K3</text>
+          <circle cx="312" cy="148" r="16" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.4)" stroke-width="1.2"/>
+          <text x="312" y="152" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">K4</text>
+          <circle cx="272" cy="166" r="16" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.4)" stroke-width="1.2"/>
+          <text x="272" y="170" text-anchor="middle" font-size="9" fill="#c084fc" font-family="JetBrains Mono,monospace">K5</text>
+          <!-- Secret hub -->
+          <circle cx="230" cy="108" r="22" fill="rgba(168,85,247,0.15)" stroke="rgba(168,85,247,0.6)" stroke-width="2"/>
+          <text x="230" y="104" text-anchor="middle" font-size="8" fill="#c084fc" font-family="JetBrains Mono,monospace">SHAMIR</text>
+          <text x="230" y="116" text-anchor="middle" font-size="8" fill="#c084fc" font-family="JetBrains Mono,monospace">SECRET</text>
+          <!-- connections -->
+          <line x1="200" y1="80" x2="208" y2="90" stroke="rgba(0,229,200,0.3)" stroke-width="1"/>
+          <line x1="252" y1="98" x2="272" y2="60" stroke="rgba(168,85,247,0.3)" stroke-width="0.8"/>
+          <line x1="252" y1="100" x2="297" y2="78" stroke="rgba(168,85,247,0.3)" stroke-width="0.8"/>
+          <line x1="252" y1="110" x2="312" y2="110" stroke="rgba(168,85,247,0.3)" stroke-width="0.8"/>
+          <line x1="252" y1="118" x2="297" y2="140" stroke="rgba(168,85,247,0.3)" stroke-width="0.8"/>
+          <line x1="252" y1="122" x2="272" y2="154" stroke="rgba(168,85,247,0.3)" stroke-width="0.8"/>
+          <!-- timing label -->
+          <rect x="20" y="148" width="88" height="30" rx="4" fill="rgba(0,229,200,0.1)" stroke="rgba(0,229,200,0.3)" stroke-width="1"/>
+          <text x="64" y="168" text-anchor="middle" font-size="9" fill="#00e5c8" font-family="JetBrains Mono,monospace">&lt; 10s latency</text>
+          <text x="20" y="14" font-size="11" fill="rgba(0,229,200,0.7)" font-family="JetBrains Mono,monospace">ZERO KEY-LEAKAGE ARCHITECTURE</text>
+        </svg>
+      </div>
+      <div class="proj-body">
+        <div class="proj-year">2025 · Cybersecurity</div>
+        <div class="proj-title">Secure Video Encryption Web App</div>
+        <div class="proj-desc">Flask-based security framework implementing AES frame-by-frame encryption with Shamir's Secret Sharing for 5-party key distribution. Sub-10-second processing for 500MB videos with zero key-leakage.</div>
+        <div class="proj-metric">⚡ &lt;10s for 500MB · 🔒 Zero key-leakage proven</div>
+        <div class="proj-tags">
+          <span class="ptag">Python</span><span class="ptag">Flask</span><span class="ptag">OpenCV</span><span class="ptag">AES</span><span class="ptag">Shamir's Secret</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ RESEARCH ══ -->
+<section id="research">
+  <div class="s-tag">Research</div>
+  <h2 class="s-title">PUBLISHED<br><span class="dim">ML RESEARCH</span></h2>
+
+  <div class="pub-wrap reveal">
+    <div class="pub-visual">📄</div>
+    <div>
+      <div class="pub-journal">IJSREM · December 2024 · Peer-Reviewed Publication</div>
+      <div class="pub-title">Forecasting Vehicle Energy Resource Utilization for Improved Performance</div>
+      <div class="pub-desc">Published a hybrid machine learning framework integrating SVM, Random Forest, and Neural Networks for fuel consumption forecasting, targeted at large-scale logistics networks with complex multi-variable energy usage patterns.</div>
+      <div class="pub-kpi">✦ Achieved 12% improvement in fuel consumption forecasting accuracy</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EDUCATION ══ -->
+<section id="education">
+  <div class="s-tag">Education</div>
+  <h2 class="s-title">ACADEMIC<br><span class="dim">BACKGROUND</span></h2>
+
+  <div class="edu-timeline">
+
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div class="edu-card">
+        <div class="edu-period">November 2021 – August 2025</div>
+        <div class="edu-degree">B.Tech — Computer Science & Engineering</div>
+        <div class="edu-inst">Guru Nanak Institutions Technical Campus, Hyderabad</div>
+        <div class="edu-detail">Relevant coursework: Data Structures & Algorithms, Operating Systems, Databases, Artificial Intelligence, Machine Learning, Computer Networks</div>
+        <span class="edu-badge badge-gpa">GPA: 8.33 / 10</span>
+      </div>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div class="edu-card">
+        <div class="edu-period">August 2019 – February 2021</div>
+        <div class="edu-degree">MPC — Mathematics, Physics, Chemistry</div>
+        <div class="edu-inst">Narayana Junior College, Hyderabad</div>
+        <div class="edu-detail">Completed Intermediate with a strong science foundation, excelling in mathematics and analytical subjects.</div>
+        <span class="edu-badge badge-pct">98.2%</span>
+      </div>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div class="edu-card">
+        <div class="edu-period">Secondary Education</div>
+        <div class="edu-degree">SSC / High School</div>
+        <div class="edu-inst">Gandhi Memorial High School, Hyderabad</div>
+        <div class="edu-detail">Built a strong academic foundation with focus on science and mathematics.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ACHIEVEMENTS ══ -->
+<section id="achievements">
+  <div class="s-tag">Recognition</div>
+  <h2 class="s-title">CERTS &<br><span class="dim">AWARDS</span></h2>
+
+  <div class="ach-grid">
+    <div>
+      <div class="ach-subtitle">// Certifications</div>
+      <div class="ach-list">
+        <div class="ach-card reveal">
+          <div class="ach-icon">🌐</div>
+          <div>
+            <div class="ach-name">Cisco CCNA v7</div>
+            <div class="ach-sub">Cisco Networking Academy · 2023 — IP routing, switching & network security fundamentals</div>
+          </div>
+        </div>
+        <div class="ach-card reveal reveal-d1">
+          <div class="ach-icon">☕</div>
+          <div>
+            <div class="ach-name">Problem Solving using Java</div>
+            <div class="ach-sub">College Certification · 2023 — Algorithmic problem solving & OOP proficiency</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="ach-subtitle">// Awards</div>
+      <div class="ach-list">
+        <div class="ach-card award reveal">
+          <div class="ach-icon">🥈</div>
+          <div>
+            <div class="ach-name">Runner-Up · Poster Presentation of Innovations</div>
+            <div class="ach-sub">December 2023 · Competed among 50+ teams showcasing technical research posters</div>
+          </div>
+        </div>
+        <div class="ach-card award reveal reveal-d1">
+          <div class="ach-icon">🏆</div>
+          <div>
+            <div class="ach-name">Runner-Up · Build Together Solution Challenge</div>
+            <div class="ach-sub">December 2023 · Delivered a working solution prototype in a competitive hackathon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="s-tag" style="justify-content:center">Let's Connect</div>
+    <div class="contact-big">LET'S BUILD<br><span class="glow-line">TOGETHER</span></div>
+    <p class="contact-sub">Open to full-time roles, internships, and collaborative data projects.<br>Let's turn data into something meaningful.</p>
+    <div class="contact-links">
+      <a href="mailto:kannayagarinikhil@gmail.com" class="cl-item"><span class="cl-ico">✉️</span> kannayagarinikhil@gmail.com</a>
+      <a href="https://linkedin.com/in/kannayagarinikhil-sagar" target="_blank" class="cl-item"><span class="cl-ico">💼</span> LinkedIn</a>
+      <a href="https://github.com/kannayagarinikhil17" target="_blank" class="cl-item"><span class="cl-ico">🐙</span> GitHub</a>
+      <a href="tel:+919398601015" class="cl-item"><span class="cl-ico">📞</span> +91-9398601015</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">KNS</span>
+  <p>© 2025 K Nikhil Sagar · Data Analyst · Hyderabad, India</p>
+  <p style="color:rgba(0,229,200,0.5)">Open to Work</p>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('a,button,.proj-card,.ach-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';ring.style.width='60px';ring.style.height='60px';ring.style.borderColor='rgba(0,229,200,0.7)'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';ring.style.width='40px';ring.style.height='40px';ring.style.borderColor='rgba(0,229,200,0.4)'});
+});
+
+/* ── REVEAL ── */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal,.edu-item').forEach(el=>observer.observe(el));
+
+/* ── NAV ACTIVE ── */
+const sections=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('.nav-links a');
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.style.color='');
+      const a=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if(a)a.style.color='var(--teal)';
+    }
+  });
+},{threshold:0.45}).observe;
+sections.forEach(s=>new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.style.color='');
+      const a=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if(a){a.style.color='var(--teal)'}
+    }
+  });
+},{threshold:0.45}).observe(s));
+
+/* ── COUNT-UP ── */
+function countUp(el,target,dur=1400){
+  const s=Date.now();const dec=String(target).includes('.');
+  const tick=()=>{
+    const p=Math.min((Date.now()-s)/dur,1);
+    const ease=1-Math.pow(1-p,3);
+    const v=ease*target;
+    el.textContent=dec?v.toFixed(2):Math.round(v);
+    if(p<1)requestAnimationFrame(tick);
+  };tick();
+}
+setTimeout(()=>{
+  const pfcs=document.querySelectorAll('.pfc-val');
+  // no count-up on text items, just visual ready
+},1000);
+</script>
+</body>
+</html>
